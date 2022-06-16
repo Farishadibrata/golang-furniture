@@ -1,19 +1,27 @@
-type Dog {
-  _id: String!
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Item {
+  id: ID!
   name: String!
-  isGoodBoi: Boolean!
+  style: String!
+  description: String!
+  Price: Int!
 }
 
 type Query {
-  dog(_id: String!): Dog!
-  dogs: [Dog!]!
+  items: [Item!]!
+  item(id: ID!): Item!
 }
 
-input NewDog {
+input NewItem {
   name: String!
-  isGoodBoi: Boolean!
+  style: String!
+  description: String!
+  Price: Int!
 }
 
 type Mutation {
-  createDog(input: NewDog): Dog!
+  createItem(input: NewItem!): Item!
 }

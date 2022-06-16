@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/H-Richard/go-graphql/graph/model"
+	"github.com/Farishadibrata/golang_travel/graph/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -17,7 +17,7 @@ type DB struct {
 }
 
 func Connect() *DB {
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
+	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://admin:admin@cluster0.ql3n1.mongodb.net/?retryWrites=true&w=majority"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,46 +29,48 @@ func Connect() *DB {
 	}
 }
 
-func (db *DB) Save(input *model.NewDog) *model.Dog {
-	collection := db.client.Database("animals").Collection("dogs")
+func (db *DB) Save(input model.NewItem) *model.Item {
+	collection := db.client.Database("tripartafurniture").Collection("items")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	res, err := collection.InsertOne(ctx, input)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return &model.Dog{
-		ID:        res.InsertedID.(primitive.ObjectID).Hex(),
-		Name:      input.Name,
-		IsGoodBoi: input.IsGoodBoi,
+	return &model.Item{
+		ID:          res.InsertedID.(primitive.ObjectID).Hex(),
+		Name:        input.Name,
+		Style:       input.Style,
+		Description: input.Description,
+		Price:       input.Price,
 	}
 }
 
-func (db *DB) FindByID(ID string) *model.Dog {
+func (db *DB) FindByID(ID string) *model.Item {
 	ObjectID, err := primitive.ObjectIDFromHex(ID)
 	if err != nil {
 		log.Fatal(err)
 	}
-	collection := db.client.Database("animals").Collection("dogs")
+	collection := db.client.Database("tripartafurniture").Collection("items")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	res := collection.FindOne(ctx, bson.M{"_id": ObjectID})
-	dog := model.Dog{}
-	res.Decode(&dog)
-	return &dog
+	item := model.Item{}
+	res.Decode(&item)
+	return &item
 }
 
-func (db *DB) All() []*model.Dog {
-	collection := db.client.Database("animals").Collection("dogs")
+func (db *DB) All() []*model.Item {
+	collection := db.client.Database("tripartafurniture").Collection("items")
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	cur, err := collection.Find(ctx, bson.D{})
 	if err != nil {
 		log.Fatal(err)
 	}
-	var dogs []*model.Dog
+	var dogs []*model.Item
 	for cur.Next(ctx) {
-		var dog *model.Dog
+		var dog *model.Item
 		err := cur.Decode(&dog)
 		if err != nil {
 			log.Fatal(err)
