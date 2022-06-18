@@ -46,6 +46,23 @@ func (db *DB) Save(input model.NewItem) *model.Item {
 	}
 }
 
+func (db *DB) Delete(ID string) *bool {
+	ObjectID, err := primitive.ObjectIDFromHex(ID)
+	if err != nil {
+		log.Fatal(err)
+	}
+	collection := db.client.Database("tripartafurniture").Collection("items")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	_, error := collection.DeleteOne(ctx, bson.M{"_id": ObjectID})
+	if error != nil {
+		log.Fatal(err)
+	}
+	success := new(bool)
+	*success = true
+	return success
+}
+
 func (db *DB) FindByID(ID string) *model.Item {
 	ObjectID, err := primitive.ObjectIDFromHex(ID)
 	if err != nil {
@@ -60,22 +77,30 @@ func (db *DB) FindByID(ID string) *model.Item {
 	return &item
 }
 
-func (db *DB) All() []*model.Item {
+func (db *DB) Find(input *model.FilterItem) []*model.Item {
 	collection := db.client.Database("tripartafurniture").Collection("items")
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	cur, err := collection.Find(ctx, bson.D{})
+	findQuery := bson.M{}
+
+	if input.Name != nil {
+		findQuery["name"] = input.Name
+	}
+	if input.Style != nil {
+		findQuery["style"] = input.Style
+	}
+	cur, err := collection.Find(ctx, findQuery)
 	if err != nil {
 		log.Fatal(err)
 	}
-	var dogs []*model.Item
+	var items []*model.Item
 	for cur.Next(ctx) {
-		var dog *model.Item
-		err := cur.Decode(&dog)
+		var item *model.Item
+		err := cur.Decode(&item)
 		if err != nil {
 			log.Fatal(err)
 		}
-		dogs = append(dogs, dog)
+		items = append(items, item)
 	}
-	return dogs
+	return items
 }

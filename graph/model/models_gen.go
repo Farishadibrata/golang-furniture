@@ -2,12 +2,26 @@
 
 package model
 
+type AuthOps struct {
+	Login    interface{} `json:"login" bson:"login"`
+	Register interface{} `json:"register" bson:"register"`
+}
+
+type FilterItem struct {
+	Name         *string `json:"name" bson:"name"`
+	Style        *string `json:"style" bson:"style"`
+	Description  *string `json:"description" bson:"description"`
+	Price        *int    `json:"Price" bson:"Price"`
+	DeliveryDays *int    `json:"DeliveryDays" bson:"DeliveryDays"`
+}
+
 type Item struct {
-	ID          string `json:"id" bson:"_id"`
-	Name        string `json:"name" bson:"name"`
-	Style       string `json:"style" bson:"style"`
-	Description string `json:"description" bson:"description"`
-	Price       int    `json:"Price" bson:"Price"`
+	ID           string `json:"id" bson:"_id"`
+	Name         string `json:"name" bson:"name"`
+	Style        string `json:"style" bson:"style"`
+	Description  string `json:"description" bson:"description"`
+	Price        int    `json:"Price" bson:"Price"`
+	DeliveryDays int    `json:"DeliveryDays" bson:"DeliveryDays"`
 }
 
 type NewItem struct {
@@ -15,4 +29,22 @@ type NewItem struct {
 	Style       string `json:"style" bson:"style"`
 	Description string `json:"description" bson:"description"`
 	Price       int    `json:"Price" bson:"Price"`
+}
+
+type NewUser struct {
+	Name     string `json:"name" bson:"name"`
+	Email    string `json:"email" bson:"email"`
+	Password string `json:"password" bson:"password"`
+}
+
+type User struct {
+	ID       string  `json:"id" bson:"_id"`
+	Name     string  `json:"name" bson:"name"`
+	Email    string  `json:"email" bson:"email"`
+	Password *string `json:"password" bson:"password"`
+}
+
+type CredsLogin struct {
+	Email    string `json:"email" bson:"email"`
+	Password string `json:"password" bson:"password"`
 }
