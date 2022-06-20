@@ -2,37 +2,19 @@ import { AppShell, Group, Header, Navbar, SimpleGrid, Title } from "@mantine/cor
 import { gql, GraphQLClient } from "graphql-request";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import {CardWithStats} from "./card.component";
+import { CardWithStats } from "./card.component";
+import CreateFurniture from "./createFurniture.component";
+import ListFurniture from "./listFurniture.component";
 
 function Furnitures({ checkLogin }: any) {
+
+  const [page, setPage] = useState('list')
+
   const logout = () => {
     localStorage.removeItem("jwt");
     checkLogin();
   };
 
-  const client = new GraphQLClient("/gql/query", {
-    headers: {
-      authorization : "Bearer " + localStorage.getItem('jwt')
-    }
-  })
-
-  const [styles, setStyles] = useState([])
-
-  const { isLoading, error, data } = useQuery(['cardFurnitures', styles],async () =>{
-    const queryFilter =''
-    const query = gql`query items {
-      items(input: {}){
-        id
-        name
-        price
-        style
-        description
-      }
-    }`;
-    return await client.request(query).then(data => data.items)
-  }, {
-    initialData: []
-  })
   return (
     <AppShell
       padding="md"
@@ -40,18 +22,37 @@ function Furnitures({ checkLogin }: any) {
         <Header height={60} p="xs">
           <Group>
 
-          <Title>Furniture</Title>{" "}
-          <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            logout();
-          }}
-        >
-          Logout
-        </a>
+            <Title>Furniture</Title>{" "}
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setPage('list')
+              }}
+            >
+              List Furniture
+            </a>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setPage('createNew')
+              }}
+            >
+              Create New
+            </a>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                logout();
+              }}
+            >
+              Logout
+            </a>
+
           </Group>
-          
+
         </Header>
       }
       styles={(theme) => ({
@@ -64,15 +65,9 @@ function Furnitures({ checkLogin }: any) {
       })}
     >
       <div>
-        <>
-
-        <SimpleGrid cols={4}>
-
-        {data.map((i, index) => (
-          <CardWithStats {...i} index={index}/>
-          ))}
-          </SimpleGrid>
-        </>
+        {
+          page === 'list' ? <ListFurniture /> : <CreateFurniture />
+        }
 
       </div>
     </AppShell>

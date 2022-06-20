@@ -11,8 +11,8 @@ type FilterItem struct {
 	Name         *string `json:"name" bson:"name"`
 	Style        *string `json:"style" bson:"style"`
 	Description  *string `json:"description" bson:"description"`
-	Price        *int    `json:"Price" bson:"Price"`
-	DeliveryDays *int    `json:"DeliveryDays" bson:"DeliveryDays"`
+	Price        *int    `json:"price" bson:"price"`
+	DeliveryDays *int    `json:"deliveryDays" bson:"deliveryDays"`
 }
 
 type Item struct {
@@ -20,15 +20,16 @@ type Item struct {
 	Name         string `json:"name" bson:"name"`
 	Style        string `json:"style" bson:"style"`
 	Description  string `json:"description" bson:"description"`
-	Price        int    `json:"Price" bson:"Price"`
-	DeliveryDays int    `json:"DeliveryDays" bson:"DeliveryDays"`
+	Price        int    `json:"price" bson:"price"`
+	DeliveryDays int    `json:"deliveryDays" bson:"deliveryDays"`
 }
 
 type NewItem struct {
-	Name        string `json:"name" bson:"name"`
-	Style       string `json:"style" bson:"style"`
-	Description string `json:"description" bson:"description"`
-	Price       int    `json:"Price" bson:"Price"`
+	Name         string `json:"name" bson:"name"`
+	Style        string `json:"style" bson:"style"`
+	Description  string `json:"description" bson:"description"`
+	Price        int    `json:"price" bson:"price"`
+	DeliveryDays int    `json:"deliveryDays" bson:"deliveryDays"`
 }
 
 type NewUser struct {

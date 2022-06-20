@@ -132,7 +132,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.AuthOps.Register(childComplexity, args["input"].(model.NewUser)), true
 
-	case "Item.DeliveryDays":
+	case "Item.deliveryDays":
 		if e.complexity.Item.DeliveryDays == nil {
 			break
 		}
@@ -160,7 +160,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Item.Name(childComplexity), true
 
-	case "Item.Price":
+	case "Item.price":
 		if e.complexity.Item.Price == nil {
 			break
 		}
@@ -354,23 +354,24 @@ type Item {
   name: String!
   style: String!
   description: String!
-  Price: Int!
-  DeliveryDays: Int!
+  price: Int!
+  deliveryDays: Int!
 }
 
 input FilterItem {
   name: String
   style: String
   description: String
-  Price: Int
-  DeliveryDays: Int
+  price: Int
+  deliveryDays: Int
 }
 
 input NewItem {
   name: String!
   style: String!
   description: String!
-  Price: Int!
+  price: Int!
+  deliveryDays: Int!
 }
 
 input credsLogin {
@@ -763,7 +764,7 @@ func (ec *executionContext) _Item_description(ctx context.Context, field graphql
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Item_Price(ctx context.Context, field graphql.CollectedField, obj *model.Item) (ret graphql.Marshaler) {
+func (ec *executionContext) _Item_price(ctx context.Context, field graphql.CollectedField, obj *model.Item) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -798,7 +799,7 @@ func (ec *executionContext) _Item_Price(ctx context.Context, field graphql.Colle
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Item_DeliveryDays(ctx context.Context, field graphql.CollectedField, obj *model.Item) (ret graphql.Marshaler) {
+func (ec *executionContext) _Item_deliveryDays(ctx context.Context, field graphql.CollectedField, obj *model.Item) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2398,18 +2399,18 @@ func (ec *executionContext) unmarshalInputFilterItem(ctx context.Context, obj in
 			if err != nil {
 				return it, err
 			}
-		case "Price":
+		case "price":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Price"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("price"))
 			it.Price, err = ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "DeliveryDays":
+		case "deliveryDays":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("DeliveryDays"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("deliveryDays"))
 			it.DeliveryDays, err = ec.unmarshalOInt2ᚖint(ctx, v)
 			if err != nil {
 				return it, err
@@ -2450,11 +2451,19 @@ func (ec *executionContext) unmarshalInputNewItem(ctx context.Context, obj inter
 			if err != nil {
 				return it, err
 			}
-		case "Price":
+		case "price":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Price"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("price"))
 			it.Price, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "deliveryDays":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("deliveryDays"))
+			it.DeliveryDays, err = ec.unmarshalNInt2int(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -2617,13 +2626,13 @@ func (ec *executionContext) _Item(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "Price":
-			out.Values[i] = ec._Item_Price(ctx, field, obj)
+		case "price":
+			out.Values[i] = ec._Item_price(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "DeliveryDays":
-			out.Values[i] = ec._Item_DeliveryDays(ctx, field, obj)
+		case "deliveryDays":
+			out.Values[i] = ec._Item_deliveryDays(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}

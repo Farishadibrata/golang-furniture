@@ -31,23 +31,24 @@ type Item {
   name: String!
   style: String!
   description: String!
-  Price: Int!
-  DeliveryDays: Int!
+  price: Int!
+  deliveryDays: Int!
 }
 
 input FilterItem {
   name: String
   style: String
   description: String
-  Price: Int
-  DeliveryDays: Int
+  price: Int
+  deliveryDays: Int
 }
 
 input NewItem {
   name: String!
   style: String!
   description: String!
-  Price: Int!
+  price: Int!
+  deliveryDays: Int!
 }
 
 input credsLogin {
@@ -62,7 +63,7 @@ type Mutation {
 }
 
 type Query {
-  items(input : FilterItem!): [Item!]! @auth
+  items(input : FilterItem): [Item!]! @auth
   item(id: ID!): Item! @auth
   
 }

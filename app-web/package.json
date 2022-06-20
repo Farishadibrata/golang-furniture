@@ -11,9 +11,11 @@
     "@mantine/core": "^4.2.9",
     "@mantine/form": "^4.2.9",
     "@mantine/hooks": "^4.2.9",
+    "@types/react-currency-format": "^1.0.0",
     "graphql": "^16.5.0",
     "graphql-request": "^4.3.0",
     "react": "^18.0.0",
+    "react-currency-format": "^1.1.0",
     "react-dom": "^18.0.0",
     "react-query": "^3.39.1",
     "tabler-icons-react": "^1.49.0"
