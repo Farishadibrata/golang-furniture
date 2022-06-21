@@ -11,7 +11,11 @@ interface NewItem {
     deliveryDays: number
 }
 
-function CreateFurniture({setPage}) {
+interface CreateFurniture {
+    setPage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function CreateFurniture({setPage} : CreateFurniture) {
     const client = new GraphQLClient("/gql/query");
     const { mutate: createItemMutation } = useMutation(
         async (item: NewItem) => {
@@ -43,12 +47,11 @@ function CreateFurniture({setPage}) {
 
     return (
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-            <Title>
+            <Title order={2}>
                 New Item
             </Title>
             <form
                 onSubmit={form.onSubmit((values) => {
-                    console.log(values);
                     createItemMutation({ ...values });
                 })}
             >

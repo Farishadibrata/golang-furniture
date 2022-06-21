@@ -1,59 +1,39 @@
-import { AppShell, Group, Header, Navbar, SimpleGrid, Title } from "@mantine/core";
+import {
+  AppShell,
+  Group,
+  Header,
+  Navbar,
+  SimpleGrid,
+  Title,
+} from "@mantine/core";
+import { useToggle } from "@mantine/hooks";
 import { gql, GraphQLClient } from "graphql-request";
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters, useMutation, useQuery } from "react-query";
 import { CardWithStats } from "./card.component";
 import CreateFurniture from "./createFurniture.component";
+import { HeaderResponsive } from "./header.component";
 import ListFurniture from "./listFurniture.component";
 
-function Furnitures({ checkLogin }: any) {
+interface FurniturePage {
+  checkLogin: () => void;
+}
 
-  const [page, setPage] = useState('list')
-
-  const logout = () => {
-    localStorage.removeItem("jwt");
-    checkLogin();
-  };
+function Furnitures({ checkLogin }: FurniturePage) {
+  const [page, setPage] = useState("list");
+  const [deleteMode, toggleDeleteMode] = useToggle('view', ['view', 'delete']);
 
   return (
     <AppShell
       padding="md"
       header={
-        <Header height={60} p="xs">
-          <Group>
-
-            <Title>Furniture</Title>{" "}
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setPage('list')
-              }}
-            >
-              List Furniture
-            </a>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setPage('createNew')
-              }}
-            >
-              Create New
-            </a>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                logout();
-              }}
-            >
-              Logout
-            </a>
-
-          </Group>
-
-        </Header>
+        <HeaderResponsive
+          setPage={setPage}
+          checkLogin={checkLogin}
+          deleteMode={deleteMode}
+          toggleDeleteMode={toggleDeleteMode}
+          page={page}
+        />
       }
       styles={(theme) => ({
         main: {
@@ -64,12 +44,7 @@ function Furnitures({ checkLogin }: any) {
         },
       })}
     >
-      <div>
-        {
-          page === 'list' ? <ListFurniture /> : <CreateFurniture />
-        }
-
-      </div>
+      <div>{page === "list" ? <ListFurniture deleteMode={deleteMode} /> : <CreateFurniture setPage={setPage} />}</div>
     </AppShell>
   );
 }
