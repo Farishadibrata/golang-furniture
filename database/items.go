@@ -3,9 +3,11 @@ package database
 import (
 	"context"
 	"log"
+	"os"
 	"time"
 
 	"github.com/Farishadibrata/golang_travel/graph/model"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -16,8 +18,20 @@ type DB struct {
 	client *mongo.Client
 }
 
+func goDotEnvVariable(key string) string {
+
+	// load .env file
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	return os.Getenv(key)
+}
+
 func Connect() *DB {
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://admin:admin@cluster0.ql3n1.mongodb.net/?retryWrites=true&w=majority"))
+	client, err := mongo.NewClient(options.Client().ApplyURI(goDotEnvVariable("MONGODB")))
 	if err != nil {
 		log.Fatal(err)
 	}
