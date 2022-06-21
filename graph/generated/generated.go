@@ -13,7 +13,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/Farishadibrata/golang_travel/graph/model"
+	"github.com/Farishadibrata/golang-furniture/graph/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -403,7 +403,7 @@ func (ec *executionContext) field_AuthOps_login_args(ctx context.Context, rawArg
 	var arg0 model.CredsLogin
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNcredsLogin2githubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐCredsLogin(ctx, tmp)
+		arg0, err = ec.unmarshalNcredsLogin2githubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐCredsLogin(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -418,7 +418,7 @@ func (ec *executionContext) field_AuthOps_register_args(ctx context.Context, raw
 	var arg0 model.NewUser
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewUser2githubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐNewUser(ctx, tmp)
+		arg0, err = ec.unmarshalNNewUser2githubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐNewUser(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -433,7 +433,7 @@ func (ec *executionContext) field_Mutation_createItem_args(ctx context.Context, 
 	var arg0 model.NewItem
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewItem2githubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐNewItem(ctx, tmp)
+		arg0, err = ec.unmarshalNNewItem2githubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐNewItem(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -493,7 +493,7 @@ func (ec *executionContext) field_Query_items_args(ctx context.Context, rawArgs 
 	var arg0 *model.FilterItem
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalOFilterItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐFilterItem(ctx, tmp)
+		arg0, err = ec.unmarshalOFilterItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐFilterItem(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -873,7 +873,7 @@ func (ec *executionContext) _Mutation_createItem(ctx context.Context, field grap
 	}
 	res := resTmp.(*model.Item)
 	fc.Result = res
-	return ec.marshalNItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐItem(ctx, field.Selections, res)
+	return ec.marshalNItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐItem(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_deleteItem(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -947,7 +947,7 @@ func (ec *executionContext) _Mutation_auth(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.(*model.AuthOps)
 	fc.Result = res
-	return ec.marshalNAuthOps2ᚖgithubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐAuthOps(ctx, field.Selections, res)
+	return ec.marshalNAuthOps2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐAuthOps(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_items(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -995,7 +995,7 @@ func (ec *executionContext) _Query_items(ctx context.Context, field graphql.Coll
 		if data, ok := tmp.([]*model.Item); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/Farishadibrata/golang_travel/graph/model.Item`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/Farishadibrata/golang-furniture/graph/model.Item`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1009,7 +1009,7 @@ func (ec *executionContext) _Query_items(ctx context.Context, field graphql.Coll
 	}
 	res := resTmp.([]*model.Item)
 	fc.Result = res
-	return ec.marshalNItem2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐItemᚄ(ctx, field.Selections, res)
+	return ec.marshalNItem2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐItemᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_item(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -1057,7 +1057,7 @@ func (ec *executionContext) _Query_item(ctx context.Context, field graphql.Colle
 		if data, ok := tmp.(*model.Item); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/Farishadibrata/golang_travel/graph/model.Item`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/Farishadibrata/golang-furniture/graph/model.Item`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1071,7 +1071,7 @@ func (ec *executionContext) _Query_item(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.(*model.Item)
 	fc.Result = res
-	return ec.marshalNItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐItem(ctx, field.Selections, res)
+	return ec.marshalNItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐItem(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -3048,11 +3048,11 @@ func (ec *executionContext) marshalNAny2interface(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) marshalNAuthOps2githubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐAuthOps(ctx context.Context, sel ast.SelectionSet, v model.AuthOps) graphql.Marshaler {
+func (ec *executionContext) marshalNAuthOps2githubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐAuthOps(ctx context.Context, sel ast.SelectionSet, v model.AuthOps) graphql.Marshaler {
 	return ec._AuthOps(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNAuthOps2ᚖgithubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐAuthOps(ctx context.Context, sel ast.SelectionSet, v *model.AuthOps) graphql.Marshaler {
+func (ec *executionContext) marshalNAuthOps2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐAuthOps(ctx context.Context, sel ast.SelectionSet, v *model.AuthOps) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -3107,11 +3107,11 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNItem2githubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐItem(ctx context.Context, sel ast.SelectionSet, v model.Item) graphql.Marshaler {
+func (ec *executionContext) marshalNItem2githubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐItem(ctx context.Context, sel ast.SelectionSet, v model.Item) graphql.Marshaler {
 	return ec._Item(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐItemᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Item) graphql.Marshaler {
+func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐItemᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Item) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -3135,7 +3135,7 @@ func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋFarishadibrataᚋg
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐItem(ctx, sel, v[i])
+			ret[i] = ec.marshalNItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐItem(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3148,7 +3148,7 @@ func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋFarishadibrataᚋg
 	return ret
 }
 
-func (ec *executionContext) marshalNItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐItem(ctx context.Context, sel ast.SelectionSet, v *model.Item) graphql.Marshaler {
+func (ec *executionContext) marshalNItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐItem(ctx context.Context, sel ast.SelectionSet, v *model.Item) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -3158,12 +3158,12 @@ func (ec *executionContext) marshalNItem2ᚖgithubᚗcomᚋFarishadibrataᚋgola
 	return ec._Item(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNNewItem2githubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐNewItem(ctx context.Context, v interface{}) (model.NewItem, error) {
+func (ec *executionContext) unmarshalNNewItem2githubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐNewItem(ctx context.Context, v interface{}) (model.NewItem, error) {
 	res, err := ec.unmarshalInputNewItem(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNNewUser2githubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐNewUser(ctx context.Context, v interface{}) (model.NewUser, error) {
+func (ec *executionContext) unmarshalNNewUser2githubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐNewUser(ctx context.Context, v interface{}) (model.NewUser, error) {
 	res, err := ec.unmarshalInputNewUser(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -3412,7 +3412,7 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 	return res
 }
 
-func (ec *executionContext) unmarshalNcredsLogin2githubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐCredsLogin(ctx context.Context, v interface{}) (model.CredsLogin, error) {
+func (ec *executionContext) unmarshalNcredsLogin2githubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐCredsLogin(ctx context.Context, v interface{}) (model.CredsLogin, error) {
 	res, err := ec.unmarshalInputcredsLogin(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -3441,7 +3441,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return graphql.MarshalBoolean(*v)
 }
 
-func (ec *executionContext) unmarshalOFilterItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolang_travelᚋgraphᚋmodelᚐFilterItem(ctx context.Context, v interface{}) (*model.FilterItem, error) {
+func (ec *executionContext) unmarshalOFilterItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑfurnitureᚋgraphᚋmodelᚐFilterItem(ctx context.Context, v interface{}) (*model.FilterItem, error) {
 	if v == nil {
 		return nil, nil
 	}

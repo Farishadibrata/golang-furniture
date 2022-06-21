@@ -6,9 +6,9 @@ package graph
 import (
 	"context"
 
-	"github.com/Farishadibrata/golang_travel/database"
-	"github.com/Farishadibrata/golang_travel/graph/generated"
-	"github.com/Farishadibrata/golang_travel/graph/model"
+	"github.com/Farishadibrata/golang-furniture/database"
+	"github.com/Farishadibrata/golang-furniture/graph/generated"
+	"github.com/Farishadibrata/golang-furniture/graph/model"
 )
 
 func (r *authOpsResolver) Login(ctx context.Context, obj *model.AuthOps, creds model.CredsLogin) (interface{}, error) {

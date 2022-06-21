@@ -1,4 +1,4 @@
-module github.com/Farishadibrata/golang_travel
+module github.com/Farishadibrata/golang-furniture
 
 go 1.18
 

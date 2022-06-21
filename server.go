@@ -7,10 +7,10 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/Farishadibrata/golang_travel/directives"
-	"github.com/Farishadibrata/golang_travel/graph"
-	"github.com/Farishadibrata/golang_travel/graph/generated"
-	middlewares "github.com/Farishadibrata/golang_travel/middleware"
+	"github.com/Farishadibrata/golang-furniture/directives"
+	"github.com/Farishadibrata/golang-furniture/graph"
+	"github.com/Farishadibrata/golang-furniture/graph/generated"
+	middlewares "github.com/Farishadibrata/golang-furniture/middleware"
 	"github.com/gorilla/mux"
 )
 

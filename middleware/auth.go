@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/Farishadibrata/golang_travel/service"
+	"github.com/Farishadibrata/golang-furniture/service"
 )
 
 type authString string

@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/Farishadibrata/golang_travel/graph/model"
-	"github.com/Farishadibrata/golang_travel/service"
-	"github.com/Farishadibrata/golang_travel/tools"
+	"github.com/Farishadibrata/golang-furniture/graph/model"
+	"github.com/Farishadibrata/golang-furniture/service"
+	"github.com/Farishadibrata/golang-furniture/tools"
 	"github.com/vektah/gqlparser/v2/gqlerror"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
