@@ -18,15 +18,19 @@ type DB struct {
 	client *mongo.Client
 }
 
+type EmailCreds struct {
+	host         string
+	port         int
+	senderName   string
+	authEmail    string
+	authPassword string
+}
+
 func goDotEnvVariable(key string) string {
-
-	// load .env file
 	err := godotenv.Load(".env")
-
 	if err != nil {
 		log.Fatalf("Error loading .env file")
 	}
-
 	return os.Getenv(key)
 }
 
@@ -58,6 +62,7 @@ func (db *DB) Save(input model.NewItem) *model.Item {
 		Description: input.Description,
 		Price:       input.Price,
 	}
+
 }
 
 func (db *DB) Delete(ID string) *bool {
