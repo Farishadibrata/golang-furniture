@@ -52,13 +52,13 @@ input NewItem {
 }
 
 input credsLogin {
-  email : String!
-  password : String!
+  email: String!
+  password: String!
 }
 
 type Mutation {
-  createItem(input: NewItem!): Item!
-  deleteItem(id : ID!) : Boolean
+  createItem(input: NewItem!): Item! @auth
+  deleteItem(id : ID!) : Boolean @auth
   auth: AuthOps!
 }
 
