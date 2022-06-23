@@ -3,11 +3,11 @@ package database
 import (
 	"context"
 	"log"
-	"os"
 	"time"
 
 	"github.com/Farishadibrata/golang-furniture/graph/model"
-	"github.com/joho/godotenv"
+	"github.com/Farishadibrata/golang-furniture/service"
+	"github.com/Farishadibrata/golang-furniture/tools"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -26,16 +26,8 @@ type EmailCreds struct {
 	authPassword string
 }
 
-func goDotEnvVariable(key string) string {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("Error loading .env file")
-	}
-	return os.Getenv(key)
-}
-
 func Connect() *DB {
-	client, err := mongo.NewClient(options.Client().ApplyURI(goDotEnvVariable("MONGODB")))
+	client, err := mongo.NewClient(options.Client().ApplyURI(tools.GoDotEnvVariable("MONGODB")))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -55,6 +47,20 @@ func (db *DB) Save(input model.NewItem) *model.Item {
 	if err != nil {
 		log.Fatal(err)
 	}
+	userObjectID, err := primitive.ObjectIDFromHex(input.CreatedBy)
+	collectionUser := db.client.Database("tripartafurniture").Collection("users").FindOne(ctx, bson.M{"_id": userObjectID})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var Title string = "New item added " + input.Name
+	var Body string = "New item added " + input.Name
+
+	user := model.User{}
+	collectionUser.Decode(&user)
+	service.SendEmail(user.Email, Title, Body)
+
 	return &model.Item{
 		ID:          res.InsertedID.(primitive.ObjectID).Hex(),
 		Name:        input.Name,

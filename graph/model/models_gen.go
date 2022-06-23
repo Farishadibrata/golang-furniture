@@ -30,6 +30,7 @@ type NewItem struct {
 	Description  string `json:"description" bson:"description"`
 	Price        int    `json:"price" bson:"price"`
 	DeliveryDays int    `json:"deliveryDays" bson:"deliveryDays"`
+	CreatedBy    string `json:"createdBy" bson:"createdBy"`
 }
 
 type NewUser struct {

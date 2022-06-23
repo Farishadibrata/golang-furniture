@@ -372,6 +372,7 @@ input NewItem {
   description: String!
   price: Int!
   deliveryDays: Int!
+  createdBy: String!
 }
 
 input credsLogin {
@@ -2504,6 +2505,14 @@ func (ec *executionContext) unmarshalInputNewItem(ctx context.Context, obj inter
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("deliveryDays"))
 			it.DeliveryDays, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "createdBy":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
+			it.CreatedBy, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}

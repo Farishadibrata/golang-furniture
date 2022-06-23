@@ -49,6 +49,7 @@ input NewItem {
   description: String!
   price: Int!
   deliveryDays: Int!
+  createdBy: String!
 }
 
 input credsLogin {
