@@ -106,4 +106,4 @@ function CreateFurniture({setPage} : CreateFurniture) {
     )
 }
 
-export default CreateFurniture
+export {CreateFurniture}

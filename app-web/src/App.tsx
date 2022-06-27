@@ -1,9 +1,9 @@
 import './App.css'
 
 import { Button } from '@mantine/core';
-import Furnitures from './pages/furnitures';
 import { Login } from './pages/login';
 import { useEffect, useState } from 'react';
+import { Furnitures } from './pages/furnitures';
 
 export function MyApp() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)

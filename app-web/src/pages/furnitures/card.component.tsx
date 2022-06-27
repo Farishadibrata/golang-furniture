@@ -5,14 +5,8 @@ import {
   Image,
   Text,
   Group,
-  RingProgress,
-  useMantineTheme,
   Badge,
-  ActionIcon,
-  LoadingOverlay,
 } from "@mantine/core";
-import { Clock } from "tabler-icons-react";
-import * as CurrencyFormat from "react-currency-format";
 import { gql, GraphQLClient } from "graphql-request";
 import {
   QueryObserverResult,
@@ -57,7 +51,7 @@ interface CardWithStatsProps {
   ) => Promise<QueryObserverResult<any, unknown>>;
 }
 
-export function CardWithStats({
+function CardWithStats({
   deleteMode,
   id,
   name,
@@ -94,9 +88,6 @@ export function CardWithStats({
     }
   );
 
-  if (isLoading) {
-    return <LoadingOverlay visible />;
-  }
 
   return (
     <Card
@@ -104,7 +95,6 @@ export function CardWithStats({
       p="lg"
       className={classes.card}
       onClick={() => {
-        console.log(id)
         if (deleteMode === "delete") {
           deleteItemMutation(id);
         }
@@ -121,7 +111,7 @@ export function CardWithStats({
 
       <Group position="apart" mt="xl">
         <Text size="sm" weight={700} className={classes.title}>
-          {name} {index}
+          {name}
         </Text>
         <Group>
           <Badge leftSection={"🕰️"}>{deliveryDays} Days</Badge>
@@ -130,13 +120,14 @@ export function CardWithStats({
       </Group>
 
       <Text mt="sm" mb="md" color="dimmed" size="xs">
-        <CurrencyFormat
+        {/* <CurrencyFormat
           value={price}
           displayType={"text"}
           thousandSeparator={"."}
           prefix={"Rp."}
           decimalSeparator={","}
-        />
+        /> */}
+        {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(price)}
       </Text>
       <Text mt="sm" mb="md" color="dimmed" size="xs">
         {description}
@@ -144,3 +135,4 @@ export function CardWithStats({
     </Card>
   );
 }
+export {CardWithStats}

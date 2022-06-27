@@ -63,7 +63,7 @@ function ListFurniture({ deleteMode, checkLogin }: ListFurniture) {
   });
 
   const { isLoading, data, error, refetch } = useQuery(
-    ["cardFurnitures", styles],
+    ["cardFurnitures", styles, deliveryDays],
     async () => {
       let queryFilter : any = {};
 
@@ -73,7 +73,6 @@ function ListFurniture({ deleteMode, checkLogin }: ListFurniture) {
       if (deliveryDays.length !== 0) {
         queryFilter.deliveryDays = deliveryDays;
       }
-      console.log(queryfy(queryFilter))
       const query = gql`
         query items {
           items(input: ${queryfy(queryFilter)}) {
@@ -106,10 +105,10 @@ function ListFurniture({ deleteMode, checkLogin }: ListFurniture) {
         .then((data) => data.deliveryDays);
       let items = [];
       for (let item of DeliveryDays) {
-        items.push({
-          label: item + " Days",
-          value: item,
-        });
+          items.push({
+            label: item + " Days",
+            value: item,
+          });
       }
       return items;
     },
@@ -136,7 +135,6 @@ function ListFurniture({ deleteMode, checkLogin }: ListFurniture) {
         checkLogin();
       }
     }
-    console.log(JSON.stringify(error));
   }, [data, badgeColors]);
 
   if (
@@ -178,8 +176,9 @@ function ListFurniture({ deleteMode, checkLogin }: ListFurniture) {
       </SimpleGrid>
       <Grid columns={4}>
         {data.map((i: item, index: number) => (
-          <Grid.Col md={1} sm={2} span={4}>
+          <Grid.Col md={1} sm={2} span={4} key={index}>
             <CardWithStats
+             key={index}
               {...i}
               index={index}
               deliveryDays={i.deliveryDays}
@@ -190,10 +189,11 @@ function ListFurniture({ deleteMode, checkLogin }: ListFurniture) {
           </Grid.Col>
         ))}
       </Grid>
+      
       {data.length === 0 && <Center mb="sm" mt='md'> No Data</Center>}
 
     </>
   );
 }
 
-export default ListFurniture;
+export {ListFurniture};

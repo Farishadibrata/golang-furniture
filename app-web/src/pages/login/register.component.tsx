@@ -127,4 +127,4 @@ const RegisterPage = ({ setPage, setAlertSuccess }: RegisterPage) => {
     </Container>
   );
 };
-export default RegisterPage;
+export {RegisterPage};

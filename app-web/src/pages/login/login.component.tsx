@@ -99,7 +99,6 @@ const LoginPage = ({ setPage, setIsLoggedIn, checkLogin }: LoginPage) => {
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form
           onSubmit={form.onSubmit((values) => {
-            console.log(values);
             setPage("Login");
             loginMutation({
               email: values.email,
@@ -129,4 +128,4 @@ const LoginPage = ({ setPage, setIsLoggedIn, checkLogin }: LoginPage) => {
     </Container>
   );
 };
-export default LoginPage;
+export {LoginPage};

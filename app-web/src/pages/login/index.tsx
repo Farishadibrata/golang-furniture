@@ -16,8 +16,8 @@ import { AlertCircle } from "tabler-icons-react";
 import { useForm } from "@mantine/form";
 import { useMutation, useQuery } from "react-query";
 import request, { gql, GraphQLClient } from "graphql-request";
-import RegisterPage from "./register.component";
-import LoginPage from "./login.component";
+import { RegisterPage } from "./register.component";
+import { LoginPage } from "./login.component";
 
 export interface Pages {
   setPage: React.Dispatch<React.SetStateAction<string>>;
