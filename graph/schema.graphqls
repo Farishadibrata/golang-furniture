@@ -37,10 +37,10 @@ type Item {
 
 input FilterItem {
   name: String
-  style: String
+  style: [String]
   description: String
   price: Int
-  deliveryDays: Int
+  deliveryDays: [Int]
 }
 
 input NewItem {
@@ -65,6 +65,7 @@ type Mutation {
 
 type Query {
   items(input : FilterItem): [Item!]! @auth
+  deliveryDays: [Int!]! @auth
   item(id: ID!): Item! @auth
   
 }

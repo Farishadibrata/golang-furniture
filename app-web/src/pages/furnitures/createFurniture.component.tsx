@@ -1,6 +1,7 @@
 import { Button, NumberInput, Paper, Select, Textarea, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { gql, GraphQLClient } from 'graphql-request';
+import jwtDecode from 'jwt-decode';
 import React from 'react'
 import { useMutation } from 'react-query';
 interface NewItem {
@@ -16,13 +17,19 @@ interface CreateFurniture {
 }
 
 function CreateFurniture({setPage} : CreateFurniture) {
-    const client = new GraphQLClient("/gql/query");
+    const client = new GraphQLClient("/gql/query", {
+        headers: {
+          authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      });
     const { mutate: createItemMutation } = useMutation(
         async (item: NewItem) => {
             const variables = { ...item }
-
+            const token = localStorage.getItem("jwt")!;
+            // @ts-ignore
+            const decoded = jwtDecode(token).ID;
             const query = gql`mutation createItem {
-                createItem(input: {name : "${item.name}" style : "${item.style}" description : "${item.description}" price: ${item.price} deliveryDays: ${item.deliveryDays}}){
+                createItem(input: {name : "${item.name}" style : "${item.style}" description : "${item.description}" price: ${item.price} deliveryDays: ${item.deliveryDays}, createdBy : "${decoded}"}){
                     id
                 }
             }`;
@@ -57,7 +64,7 @@ function CreateFurniture({setPage} : CreateFurniture) {
             >
                 <TextInput
                     label="Name"
-                    placeholder="you@mantine.dev"
+                    placeholder="Name"
                     required
                     {...form.getInputProps("name")}
                 />

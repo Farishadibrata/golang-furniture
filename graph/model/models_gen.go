@@ -8,11 +8,11 @@ type AuthOps struct {
 }
 
 type FilterItem struct {
-	Name         *string `json:"name" bson:"name"`
-	Style        *string `json:"style" bson:"style"`
-	Description  *string `json:"description" bson:"description"`
-	Price        *int    `json:"price" bson:"price"`
-	DeliveryDays *int    `json:"deliveryDays" bson:"deliveryDays"`
+	Name         *string   `json:"name" bson:"name"`
+	Style        []*string `json:"style" bson:"style"`
+	Description  *string   `json:"description" bson:"description"`
+	Price        *int      `json:"price" bson:"price"`
+	DeliveryDays []*int    `json:"deliveryDays" bson:"deliveryDays"`
 }
 
 type Item struct {

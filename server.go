@@ -31,13 +31,11 @@ func main() {
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(schema))
 
 	buildHandler := http.FileServer(http.Dir("./app-web/dist/"))
-	staticHandler := http.StripPrefix("/assets/", http.FileServer(http.Dir("./app-web/dist/assets")))
-
+	staticHandler := http.StripPrefix("/assets/", http.FileServer(http.Dir("./testf")))
 	router.Handle("/playground", playground.Handler("GraphQL playground", "/query"))
 	router.Handle("/query", srv)
 	router.Handle("/", buildHandler)
 	router.Handle("/assets", staticHandler)
-
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	log.Fatal(http.ListenAndServe(":"+port, router))
+	log.Fatal(http.ListenAndServe("127.0.0.1:"+port, router))
 }

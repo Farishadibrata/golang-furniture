@@ -37,6 +37,9 @@ func (r *queryResolver) Items(ctx context.Context, input *model.FilterItem) ([]*
 	}
 	return db.Find(input), nil
 }
+func (r *queryResolver) DeliveryDays(ctx context.Context) ([]int, error) {
+	return db.DeliveryDays(), nil
+}
 
 func (r *queryResolver) Item(ctx context.Context, id string) (*model.Item, error) {
 	return db.FindByID(id), nil

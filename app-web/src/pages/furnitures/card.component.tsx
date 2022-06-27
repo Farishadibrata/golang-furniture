@@ -71,7 +71,12 @@ export function CardWithStats({
 }: CardWithStatsProps) {
   const { classes } = useStyles();
   const [imageFetched, setImageFetched] = useState(Date.now())
-  const client = new GraphQLClient("/gql/query");
+  const client = new GraphQLClient("/gql/query", {
+    headers: {
+      authorization: "Bearer " + localStorage.getItem("jwt"),
+    },
+  });
+  
   const { mutate: deleteItemMutation, isLoading } = useMutation(
     async (id: string) => {
       const query = gql`mutation{

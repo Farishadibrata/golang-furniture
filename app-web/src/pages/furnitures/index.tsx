@@ -44,7 +44,7 @@ function Furnitures({ checkLogin }: FurniturePage) {
         },
       })}
     >
-      <div>{page === "list" ? <ListFurniture deleteMode={deleteMode} /> : <CreateFurniture setPage={setPage} />}</div>
+      <div>{page === "list" ? <ListFurniture checkLogin={checkLogin} deleteMode={deleteMode} /> : <CreateFurniture setPage={setPage} />}</div>
     </AppShell>
   );
 }

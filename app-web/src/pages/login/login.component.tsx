@@ -1,4 +1,5 @@
 import {
+  Alert,
   Anchor,
   Button,
   Container,
@@ -10,8 +11,9 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { gql, GraphQLClient } from "graphql-request";
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "react-query";
+import { AlertCircle } from "tabler-icons-react";
 import { Pages } from ".";
 
 interface loginCreds {
@@ -25,7 +27,7 @@ interface LoginPage extends Pages {
 
 const LoginPage = ({ setPage, setIsLoggedIn, checkLogin }: LoginPage) => {
   const client = new GraphQLClient("/gql/query");
-
+  const [invalidLoginAlert, setInvalidLoginAlert] = useState(false);
   const { mutate: loginMutation } = useMutation(
     async (auth: loginCreds) => {
       const variables = {
@@ -41,6 +43,9 @@ const LoginPage = ({ setPage, setIsLoggedIn, checkLogin }: LoginPage) => {
       return await client.request(query, variables);
     },
     {
+      onError: () => {
+        setInvalidLoginAlert(true)
+      },
       onSuccess: (data) => {
         localStorage.setItem("jwt", data.auth.login.token);
         checkLogin();
@@ -60,6 +65,7 @@ const LoginPage = ({ setPage, setIsLoggedIn, checkLogin }: LoginPage) => {
   });
   return (
     <Container size={420} my={40}>
+
       <Title
         align="center"
         sx={(theme) => ({
@@ -69,6 +75,7 @@ const LoginPage = ({ setPage, setIsLoggedIn, checkLogin }: LoginPage) => {
       >
         Welcome to Furniture Gallery!
       </Title>
+      
       <Text color="dimmed" size="sm" align="center" mt={5}>
         Do not have an account yet?{" "}
         <Anchor<"a">
@@ -83,6 +90,12 @@ const LoginPage = ({ setPage, setIsLoggedIn, checkLogin }: LoginPage) => {
         </Anchor>
       </Text>
 
+      {invalidLoginAlert && (
+        <Alert mt='sm' icon={<AlertCircle size={16} />} title="Error!" color="red">
+          Invalid Login, Please check username and email are match.
+        </Alert>
+      )}
+      
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form
           onSubmit={form.onSubmit((values) => {

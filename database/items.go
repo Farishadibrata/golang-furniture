@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -55,7 +56,7 @@ func (db *DB) Save(input model.NewItem) *model.Item {
 	}
 
 	var Title string = "New item added " + input.Name
-	var Body string = "New item added " + input.Name
+	var Body string = "New item added :" + input.Name + "\n" + "Price :" + fmt.Sprintf("%d", input.Price) + "\n" + "Style :" + input.Style + "\n" + "Delivery Days :" + fmt.Sprintf("%d", input.DeliveryDays) + "\n" + "Description :" + input.Description + "\n"
 
 	user := model.User{}
 	collectionUser.Decode(&user)
@@ -107,13 +108,17 @@ func (db *DB) Find(input *model.FilterItem) []*model.Item {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	findQuery := bson.M{}
+	if input.Style != nil {
+		findQuery = bson.M{"style": bson.M{"$in": input.Style}}
+	}
+	if input.DeliveryDays != nil {
+		findQuery = bson.M{"deliveryDays": bson.M{"$in": input.DeliveryDays}}
+	}
 
 	if input.Name != nil {
 		findQuery["name"] = input.Name
 	}
-	if input.Style != nil {
-		findQuery["style"] = input.Style
-	}
+
 	cur, err := collection.Find(ctx, findQuery)
 	if err != nil {
 		log.Fatal(err)
@@ -128,4 +133,23 @@ func (db *DB) Find(input *model.FilterItem) []*model.Item {
 		items = append(items, item)
 	}
 	return items
+}
+
+func (db *DB) DeliveryDays() []int {
+	collection := db.client.Database("tripartafurniture").Collection("items")
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	lookupStage := bson.D{{"$lookup", bson.D{{"from", "items"}, {"localField", "requires._id"}, {"foreignField", "_id"}, {"as", "requires"}}}}
+	showLoadedCursor, err := collection.Aggregate(ctx, mongo.Pipeline{lookupStage})
+	if err != nil {
+		log.Fatal(err)
+	}
+	var deliveryDays []int
+
+	for showLoadedCursor.Next(ctx) {
+		var item *model.Item
+		showLoadedCursor.Decode(&item)
+		deliveryDays = append(deliveryDays, item.DeliveryDays)
+	}
+	return deliveryDays
 }
