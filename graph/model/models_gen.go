@@ -2,51 +2,71 @@
 
 package model
 
-type AuthOps struct {
-	Login    interface{} `json:"login" bson:"login"`
-	Register interface{} `json:"register" bson:"register"`
-}
-
-type FilterItem struct {
-	Name         *string   `json:"name" bson:"name"`
-	Style        []*string `json:"style" bson:"style"`
-	Description  *string   `json:"description" bson:"description"`
-	Price        *int      `json:"price" bson:"price"`
-	DeliveryDays []*int    `json:"deliveryDays" bson:"deliveryDays"`
-}
-
 type Item struct {
-	ID           string `json:"id" bson:"_id"`
-	Name         string `json:"name" bson:"name"`
-	Style        string `json:"style" bson:"style"`
-	Description  string `json:"description" bson:"description"`
-	Price        int    `json:"price" bson:"price"`
-	DeliveryDays int    `json:"deliveryDays" bson:"deliveryDays"`
+	HeaderID string `json:"HeaderID"`
+	Nama     string `json:"Nama"`
+	Harga    int    `json:"Harga"`
+	Qty      int    `json:"Qty"`
 }
 
-type NewItem struct {
-	Name         string `json:"name" bson:"name"`
-	Style        string `json:"style" bson:"style"`
-	Description  string `json:"description" bson:"description"`
-	Price        int    `json:"price" bson:"price"`
-	DeliveryDays int    `json:"deliveryDays" bson:"deliveryDays"`
-	CreatedBy    string `json:"createdBy" bson:"createdBy"`
+type ItemInput struct {
+	Nama  string `json:"Nama"`
+	Harga int    `json:"Harga"`
+	Qty   int    `json:"Qty"`
 }
 
-type NewUser struct {
-	Name     string `json:"name" bson:"name"`
-	Email    string `json:"email" bson:"email"`
-	Password string `json:"password" bson:"password"`
+type Login struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
-type User struct {
-	ID       string  `json:"id" bson:"_id"`
-	Name     string  `json:"name" bson:"name"`
-	Email    string  `json:"email" bson:"email"`
-	Password *string `json:"password" bson:"password"`
+type LoginResponse struct {
+	Token string `json:"token"`
 }
 
-type CredsLogin struct {
-	Email    string `json:"email" bson:"email"`
-	Password string `json:"password" bson:"password"`
+type NewRfq struct {
+	CompanyName      string       `json:"CompanyName"`
+	CompanyAddress   string       `json:"CompanyAddress"`
+	CompanyWebsite   string       `json:"CompanyWebsite"`
+	QuotationDate    string       `json:"QuotationDate"`
+	QuotationNo      string       `json:"QuotationNo"`
+	QuotationExpires string       `json:"QuotationExpires"`
+	MadeForName      string       `json:"MadeForName"`
+	MadeForAddress   string       `json:"MadeForAddress"`
+	MadeForPhone     string       `json:"MadeForPhone"`
+	SentToName       string       `json:"SentToName"`
+	SentToAddress    string       `json:"SentToAddress"`
+	SentToPhone      string       `json:"SentToPhone"`
+	Items            []*ItemInput `json:"Items"`
+	Snk              []string     `json:"SNK"`
+	Disc             int          `json:"Disc"`
+	Tax              int          `json:"Tax"`
+	Interest         int          `json:"Interest"`
+}
+
+type Rfq struct {
+	ID               string   `json:"id"`
+	CompanyName      string   `json:"CompanyName"`
+	CompanyAddress   string   `json:"CompanyAddress"`
+	CompanyWebsite   string   `json:"CompanyWebsite"`
+	QuotationDate    string   `json:"QuotationDate"`
+	QuotationNo      string   `json:"QuotationNo"`
+	QuotationExpires string   `json:"QuotationExpires"`
+	MadeForName      string   `json:"MadeForName"`
+	MadeForAddress   string   `json:"MadeForAddress"`
+	MadeForPhone     string   `json:"MadeForPhone"`
+	SentToName       string   `json:"SentToName"`
+	SentToAddress    string   `json:"SentToAddress"`
+	SentToPhone      string   `json:"SentToPhone"`
+	Items            []*Item  `json:"Items"`
+	Snk              []string `json:"SNK"`
+	Disc             int      `json:"Disc"`
+	Tax              int      `json:"Tax"`
+	Interest         int      `json:"Interest"`
+}
+
+type RFQList struct {
+	ID          string `json:"id"`
+	CompanyName string `json:"CompanyName"`
+	QuotationNo string `json:"QuotationNo"`
 }

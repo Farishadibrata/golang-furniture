@@ -2,9 +2,10 @@ package middlewares
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 
-	"github.com/Farishadibrata/golang-furniture/service"
+	"github.com/Farishadibrata/golang-rfq/service"
 )
 
 type authString string
@@ -22,12 +23,15 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		auth = auth[len(bearer):]
 		validate, err := service.JwtValidate(context.Background(), auth)
 		if err != nil || !validate.Valid {
-			http.Error(w, "Invalid token", http.StatusForbidden)
+			jData, _ := json.Marshal(map[string]string{"Error": "Invalid Auth token"})
+			w.Header().Set("Content-Type", "application/json")
+			w.Write(jData)
 			return
 		}
 
-		// customClaim, _ := validate.Claims.(service.JwtCustomClaim)
 		ctx := context.WithValue(r.Context(), authString("auth"), validate.Claims)
+		// w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4080")
 		r = r.WithContext(ctx)
 		next.ServeHTTP(w, r)
 	})
@@ -35,5 +39,9 @@ func AuthMiddleware(next http.Handler) http.Handler {
 
 func CtxValue(ctx context.Context) *service.JwtCustomClaim {
 	raw, _ := ctx.Value(authString("auth")).(*service.JwtCustomClaim)
+	return raw
+}
+func CtxValueRaw(ctx context.Context) string {
+	raw, _ := ctx.Value(authString("auth")).(string)
 	return raw
 }

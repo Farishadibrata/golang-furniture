@@ -1,71 +1,81 @@
 # GraphQL schema example
 #
 # https://gqlgen.com/getting-started/
+directive @requireLogin(hasToken: Boolean!) on FIELD_DEFINITION
 
-directive @goField(forceResolver: Boolean, name: String) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
-directive @auth on FIELD_DEFINITION
-
-scalar Any
-
-type User {
+type RFQ {
   id: ID!
-  name: String!
-  email: String!
-  password : String
+  CompanyName: String!
+  CompanyAddress: String!
+  CompanyWebsite: String!
+  QuotationDate: String!
+  QuotationNo: String!
+  QuotationExpires: String!
+  MadeForName: String!
+  MadeForAddress: String!
+  MadeForPhone: String!
+  SentToName: String!
+  SentToAddress: String!
+  SentToPhone: String!
+  Items: [Item]!
+  SNK: [String!]!
+  Disc: Int!
+  Tax: Int!
+  Interest: Int!
 }
-
-input NewUser {
-  name: String!
-  email: String!
-  password: String!
-}
-
-type AuthOps {
-  login(input : credsLogin!): Any! @goField(forceResolver: true)
-  register(input: NewUser!): Any! @goField(forceResolver: true)
-}
-
 
 type Item {
+  HeaderID: ID!
+  Nama: String!
+  Harga: Int!
+  Qty: Int!
+}
+
+type RFQList {
   id: ID!
-  name: String!
-  style: String!
-  description: String!
-  price: Int!
-  deliveryDays: Int!
+  CompanyName: String!
+  QuotationNo: String!
+}
+input ItemInput {
+  Nama: String!
+  Harga: Int!
+  Qty: Int!
 }
 
-input FilterItem {
-  name: String
-  style: [String]
-  description: String
-  price: Int
-  deliveryDays: [Int]
+
+input NewRFQ {
+  CompanyName: String!
+  CompanyAddress: String!
+  CompanyWebsite: String!
+  QuotationDate: String!
+  QuotationNo: String!
+  QuotationExpires: String!
+  MadeForName: String!
+  MadeForAddress: String!
+  MadeForPhone: String!
+  SentToName: String!
+  SentToAddress: String!
+  SentToPhone: String!
+  Items: [ItemInput]!
+  SNK: [String!]!
+  Disc: Int!
+  Tax: Int!
+  Interest: Int!
 }
 
-input NewItem {
-  name: String!
-  style: String!
-  description: String!
-  price: Int!
-  deliveryDays: Int!
-  createdBy: String!
-}
-
-input credsLogin {
+input Login {
   email: String!
   password: String!
 }
-
+type LoginResponse {
+  token: String!
+}
 type Mutation {
-  createItem(input: NewItem!): Item! @auth
-  deleteItem(id : ID!) : Boolean @auth
-  auth: AuthOps!
+  createRFQ(input: NewRFQ!): RFQ!
+  login(input: Login!) : LoginResponse!
 }
 
 type Query {
-  items(input : FilterItem): [Item!]! @auth
-  deliveryDays: [Int!]! @auth
-  item(id: ID!): Item! @auth
-  
+  RFQs: [RFQ!]! @requireLogin(hasToken : true)
+  RFQList: [RFQList!]! @requireLogin(hasToken : true)
 }

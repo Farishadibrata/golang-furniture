@@ -1,13 +1,5 @@
-# Furniture
-
-This Following code is built with : 
-- Web (Vite + React TS + Mantine)
-- Mobile (Expo Go)
-- API (Graphql + Golang + Mongodb)
-
-
-# Installation
-- Create new file named .env and put MONGODB key according to your connection to mongodb
-- go run server.go
-- cd app-web && yarn && yarn dev --port 3001
-- Open port 3001
+go get github.com/99designs/gqlgen/codegen@v0.17.20
+go get github.com/99designs/gqlgen/codegen/config@v0.17.20
+go get github.com/99designs/gqlgen/internal/imports@v0.17.20
+go get github.com/99designs/gqlgen@v0.17.20
+go run github.com/99designs/gqlgen generate

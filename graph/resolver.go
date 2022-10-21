@@ -1,11 +1,11 @@
 package graph
 
-import "github.com/Farishadibrata/golang-furniture/graph/model"
+import "database/sql"
 
 // This file will not be regenerated automatically.
 //
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 type Resolver struct {
-	Items []*model.Item
+	DB *sql.DB
 }

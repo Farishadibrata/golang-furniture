@@ -5,48 +5,120 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/Farishadibrata/golang-furniture/database"
-	"github.com/Farishadibrata/golang-furniture/graph/generated"
-	"github.com/Farishadibrata/golang-furniture/graph/model"
+	"github.com/Farishadibrata/golang-rfq/graph/generated"
+	"github.com/Farishadibrata/golang-rfq/graph/model"
+	"github.com/Farishadibrata/golang-rfq/service"
+	"github.com/lib/pq"
 )
 
-func (r *authOpsResolver) Login(ctx context.Context, obj *model.AuthOps, creds model.CredsLogin) (interface{}, error) {
-	return db.Login(creds)
-}
+// CreateRfq is the resolver for the createRFQ field.
+func (r *mutationResolver) CreateRfq(ctx context.Context, input model.NewRfq) (*model.Rfq, error) {
+	sqlStatement := `INSERT INTO rfq.header(
+		"CompanyName", "CompanyAddress", "CompanyWebsite", "QuotationDate", "QuotationNo", "QuotationExpires", "MadeForName", "MadeForAddress", "MadeForPhone", "SentToName", "SentToAddress", "SentToPhone", "Disc", "Tax", "Interest", "SNK")
+		VALUES ($1, $2, $3, $4, $5,$6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) RETURNING *;`
+	response := &model.Rfq{}
+	items := []*model.Item{}
 
-func (r *authOpsResolver) Register(ctx context.Context, obj *model.AuthOps, input model.NewUser) (interface{}, error) {
-	return db.CreateUser(input), nil
-}
+	err := r.DB.QueryRow(sqlStatement, input.CompanyName, input.CompanyAddress, input.CompanyWebsite, input.QuotationDate, input.QuotationNo, input.QuotationExpires, input.MadeForName, input.MadeForAddress, input.MadeForPhone, input.SentToName, input.SentToAddress, input.SentToPhone, input.Disc, input.Tax, input.Interest, pq.Array(input.Snk)).Scan(
+		&response.CompanyName,
+		&response.CompanyAddress,
+		&response.CompanyWebsite,
+		&response.QuotationDate,
+		&response.QuotationNo,
+		&response.QuotationExpires,
+		&response.MadeForName,
+		&response.MadeForAddress,
+		&response.MadeForPhone,
+		&response.SentToName,
+		&response.SentToAddress,
+		&response.SentToPhone,
+		&response.Disc,
+		&response.Tax,
+		&response.Interest,
+		pq.Array(&response.Snk),
+		&response.ID)
+	for _, item := range input.Items {
+		newItem := &model.Item{}
 
-func (r *mutationResolver) CreateItem(ctx context.Context, input model.NewItem) (*model.Item, error) {
-	return db.Save(input), nil
-}
-
-func (r *mutationResolver) DeleteItem(ctx context.Context, id string) (*bool, error) {
-	return db.Delete(id), nil
-}
-
-func (r *mutationResolver) Auth(ctx context.Context) (*model.AuthOps, error) {
-	return &model.AuthOps{}, nil
-}
-
-func (r *queryResolver) Items(ctx context.Context, input *model.FilterItem) ([]*model.Item, error) {
-	if input == nil {
-		input = &model.FilterItem{}
+		println(response.ID)
+		sqlStatementItem := `INSERT INTO rfq.items(
+			"HeaderID", "Nama", "Harga", "Qty")
+			VALUES ($1, $2, $3, $4) RETURNING *;`
+		err := r.DB.QueryRow(sqlStatementItem, response.ID, item.Nama, item.Harga, item.Qty).Scan(&newItem.HeaderID, &newItem.Nama, &newItem.Harga, &newItem.Qty)
+		if err != nil {
+			panic(err)
+		}
+		items = append(items, newItem)
 	}
-	return db.Find(input), nil
-}
-func (r *queryResolver) DeliveryDays(ctx context.Context) ([]int, error) {
-	return db.DeliveryDays(), nil
-}
-
-func (r *queryResolver) Item(ctx context.Context, id string) (*model.Item, error) {
-	return db.FindByID(id), nil
+	if err != nil {
+		panic(err)
+	}
+	response.Items = items
+	return response, err
 }
 
-// AuthOps returns generated.AuthOpsResolver implementation.
-func (r *Resolver) AuthOps() generated.AuthOpsResolver { return &authOpsResolver{r} }
+// Login is the resolver for the login field.
+func (r *mutationResolver) Login(ctx context.Context, input model.Login) (*model.LoginResponse, error) {
+	user := &model.Login{}
+	err := r.DB.QueryRow("SELECT * FROM rfq.user WHERE email = ($1) AND password = ($2)", input.Email, input.Password).Scan(&user.Email, &user.Password)
+
+	if err != nil {
+		return nil, fmt.Errorf("Invalid login")
+	}
+	token, _ := service.JwtGenerate(user.Email)
+	response := model.LoginResponse{Token: token}
+	return &response, nil
+}
+
+// RFQs is the resolver for the RFQs field.
+func (r *queryResolver) RFQs(ctx context.Context) ([]*model.Rfq, error) {
+	rows, err := r.DB.Query("SELECT * FROM rfq.header")
+	if err != nil {
+		panic(err)
+	}
+	responseArray := []*model.Rfq{}
+	for rows.Next() {
+		response := &model.Rfq{}
+		rows.Scan(&response.CompanyName,
+			&response.CompanyAddress,
+			&response.CompanyWebsite,
+			&response.QuotationDate,
+			&response.QuotationNo,
+			&response.QuotationExpires,
+			&response.MadeForName,
+			&response.MadeForAddress,
+			&response.MadeForPhone,
+			&response.SentToName,
+			&response.SentToAddress,
+			&response.SentToPhone,
+			&response.Disc,
+			&response.Tax,
+			&response.Interest,
+			pq.Array(&response.Snk),
+			&response.ID)
+		responseArray = append(responseArray, response)
+	}
+	return responseArray, nil
+}
+
+// RFQList is the resolver for the RFQList field.
+func (r *queryResolver) RFQList(ctx context.Context) ([]*model.RFQList, error) {
+	rows, err := r.DB.Query(`SELECT "ID", "CompanyName","QuotationNo" FROM rfq.header`)
+	if err != nil {
+		panic(err)
+	}
+	responseArray := []*model.RFQList{}
+	for rows.Next() {
+		response := &model.RFQList{}
+		rows.Scan(&response.ID,
+			&response.CompanyName,
+			&response.QuotationNo)
+		responseArray = append(responseArray, response)
+	}
+	return responseArray, nil
+}
 
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
@@ -54,16 +126,5 @@ func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResol
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
-type authOpsResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-var db = database.Connect()
-
-type itemsResolver struct{ *Resolver }
