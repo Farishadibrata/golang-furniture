@@ -12,9 +12,9 @@ import (
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/99designs/gqlgen/handler"
-	"github.com/Farishadibrata/golang-rfq/graph"
-	"github.com/Farishadibrata/golang-rfq/graph/generated"
-	middlewares "github.com/Farishadibrata/golang-rfq/middleware"
+	"github.com/devAlvinSyahbana/golang-rfq/graph"
+	"github.com/devAlvinSyahbana/golang-rfq/graph/generated"
+	middlewares "github.com/devAlvinSyahbana/golang-rfq/middleware"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"github.com/rs/cors"
@@ -27,9 +27,9 @@ type authString string
 const (
 	host     = "localhost"
 	portDB   = "5432"
-	user     = "postgres123"
-	password = "postgres123"
-	dbname   = "postgres"
+	user     = "postgres"
+	password = "@231020"
+	dbname   = "dms_rfq"
 )
 
 func main() {

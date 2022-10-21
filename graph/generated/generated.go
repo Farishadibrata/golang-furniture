@@ -13,7 +13,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/Farishadibrata/golang-rfq/graph/model"
+	"github.com/devAlvinSyahbana/golang-rfq/graph/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -519,7 +519,7 @@ func (ec *executionContext) field_Mutation_createRFQ_args(ctx context.Context, r
 	var arg0 model.NewRfq
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNNewRFQ2githubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐNewRfq(ctx, tmp)
+		arg0, err = ec.unmarshalNNewRFQ2githubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐNewRfq(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -534,7 +534,7 @@ func (ec *executionContext) field_Mutation_login_args(ctx context.Context, rawAr
 	var arg0 model.Login
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNLogin2githubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐLogin(ctx, tmp)
+		arg0, err = ec.unmarshalNLogin2githubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐLogin(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -844,7 +844,7 @@ func (ec *executionContext) _Mutation_createRFQ(ctx context.Context, field graph
 	}
 	res := resTmp.(*model.Rfq)
 	fc.Result = res
-	return ec.marshalNRFQ2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx, field.Selections, res)
+	return ec.marshalNRFQ2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createRFQ(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -937,7 +937,7 @@ func (ec *executionContext) _Mutation_login(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(*model.LoginResponse)
 	fc.Result = res
-	return ec.marshalNLoginResponse2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐLoginResponse(ctx, field.Selections, res)
+	return ec.marshalNLoginResponse2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐLoginResponse(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_login(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1006,7 +1006,7 @@ func (ec *executionContext) _Query_RFQs(ctx context.Context, field graphql.Colle
 		if data, ok := tmp.([]*model.Rfq); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/Farishadibrata/golang-rfq/graph/model.Rfq`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/devAlvinSyahbana/golang-rfq/graph/model.Rfq`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1020,7 +1020,7 @@ func (ec *executionContext) _Query_RFQs(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.([]*model.Rfq)
 	fc.Result = res
-	return ec.marshalNRFQ2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRfqᚄ(ctx, field.Selections, res)
+	return ec.marshalNRFQ2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRfqᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_RFQs(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1112,7 +1112,7 @@ func (ec *executionContext) _Query_RFQList(ctx context.Context, field graphql.Co
 		if data, ok := tmp.([]*model.RFQList); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/Farishadibrata/golang-rfq/graph/model.RFQList`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/devAlvinSyahbana/golang-rfq/graph/model.RFQList`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1126,7 +1126,7 @@ func (ec *executionContext) _Query_RFQList(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.([]*model.RFQList)
 	fc.Result = res
-	return ec.marshalNRFQList2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQListᚄ(ctx, field.Selections, res)
+	return ec.marshalNRFQList2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQListᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_RFQList(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1879,7 +1879,7 @@ func (ec *executionContext) _RFQ_Items(ctx context.Context, field graphql.Collec
 	}
 	res := resTmp.([]*model.Item)
 	fc.Result = res
-	return ec.marshalNItem2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐItem(ctx, field.Selections, res)
+	return ec.marshalNItem2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐItem(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_RFQ_Items(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4180,7 +4180,7 @@ func (ec *executionContext) unmarshalInputNewRFQ(ctx context.Context, obj interf
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Items"))
-			it.Items, err = ec.unmarshalNItemInput2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐItemInput(ctx, v)
+			it.Items, err = ec.unmarshalNItemInput2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐItemInput(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -4995,7 +4995,7 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐItem(ctx context.Context, sel ast.SelectionSet, v []*model.Item) graphql.Marshaler {
+func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐItem(ctx context.Context, sel ast.SelectionSet, v []*model.Item) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -5019,7 +5019,7 @@ func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋFarishadibrataᚋg
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐItem(ctx, sel, v[i])
+			ret[i] = ec.marshalOItem2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐItem(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -5033,7 +5033,7 @@ func (ec *executionContext) marshalNItem2ᚕᚖgithubᚗcomᚋFarishadibrataᚋg
 	return ret
 }
 
-func (ec *executionContext) unmarshalNItemInput2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐItemInput(ctx context.Context, v interface{}) ([]*model.ItemInput, error) {
+func (ec *executionContext) unmarshalNItemInput2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐItemInput(ctx context.Context, v interface{}) ([]*model.ItemInput, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
@@ -5042,7 +5042,7 @@ func (ec *executionContext) unmarshalNItemInput2ᚕᚖgithubᚗcomᚋFarishadibr
 	res := make([]*model.ItemInput, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalOItemInput2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐItemInput(ctx, vSlice[i])
+		res[i], err = ec.unmarshalOItemInput2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐItemInput(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -5050,16 +5050,16 @@ func (ec *executionContext) unmarshalNItemInput2ᚕᚖgithubᚗcomᚋFarishadibr
 	return res, nil
 }
 
-func (ec *executionContext) unmarshalNLogin2githubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐLogin(ctx context.Context, v interface{}) (model.Login, error) {
+func (ec *executionContext) unmarshalNLogin2githubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐLogin(ctx context.Context, v interface{}) (model.Login, error) {
 	res, err := ec.unmarshalInputLogin(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNLoginResponse2githubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐLoginResponse(ctx context.Context, sel ast.SelectionSet, v model.LoginResponse) graphql.Marshaler {
+func (ec *executionContext) marshalNLoginResponse2githubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐLoginResponse(ctx context.Context, sel ast.SelectionSet, v model.LoginResponse) graphql.Marshaler {
 	return ec._LoginResponse(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNLoginResponse2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐLoginResponse(ctx context.Context, sel ast.SelectionSet, v *model.LoginResponse) graphql.Marshaler {
+func (ec *executionContext) marshalNLoginResponse2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐLoginResponse(ctx context.Context, sel ast.SelectionSet, v *model.LoginResponse) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -5069,16 +5069,16 @@ func (ec *executionContext) marshalNLoginResponse2ᚖgithubᚗcomᚋFarishadibra
 	return ec._LoginResponse(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNNewRFQ2githubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐNewRfq(ctx context.Context, v interface{}) (model.NewRfq, error) {
+func (ec *executionContext) unmarshalNNewRFQ2githubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐNewRfq(ctx context.Context, v interface{}) (model.NewRfq, error) {
 	res, err := ec.unmarshalInputNewRFQ(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNRFQ2githubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx context.Context, sel ast.SelectionSet, v model.Rfq) graphql.Marshaler {
+func (ec *executionContext) marshalNRFQ2githubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx context.Context, sel ast.SelectionSet, v model.Rfq) graphql.Marshaler {
 	return ec._RFQ(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNRFQ2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRfqᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Rfq) graphql.Marshaler {
+func (ec *executionContext) marshalNRFQ2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRfqᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Rfq) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -5102,7 +5102,7 @@ func (ec *executionContext) marshalNRFQ2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgo
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNRFQ2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx, sel, v[i])
+			ret[i] = ec.marshalNRFQ2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -5122,7 +5122,7 @@ func (ec *executionContext) marshalNRFQ2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgo
 	return ret
 }
 
-func (ec *executionContext) marshalNRFQ2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx context.Context, sel ast.SelectionSet, v *model.Rfq) graphql.Marshaler {
+func (ec *executionContext) marshalNRFQ2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx context.Context, sel ast.SelectionSet, v *model.Rfq) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -5132,7 +5132,7 @@ func (ec *executionContext) marshalNRFQ2ᚖgithubᚗcomᚋFarishadibrataᚋgolan
 	return ec._RFQ(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNRFQList2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQListᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.RFQList) graphql.Marshaler {
+func (ec *executionContext) marshalNRFQList2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQListᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.RFQList) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -5156,7 +5156,7 @@ func (ec *executionContext) marshalNRFQList2ᚕᚖgithubᚗcomᚋFarishadibrata�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNRFQList2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQList(ctx, sel, v[i])
+			ret[i] = ec.marshalNRFQList2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQList(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -5176,7 +5176,7 @@ func (ec *executionContext) marshalNRFQList2ᚕᚖgithubᚗcomᚋFarishadibrata�
 	return ret
 }
 
-func (ec *executionContext) marshalNRFQList2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQList(ctx context.Context, sel ast.SelectionSet, v *model.RFQList) graphql.Marshaler {
+func (ec *executionContext) marshalNRFQList2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQList(ctx context.Context, sel ast.SelectionSet, v *model.RFQList) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -5512,14 +5512,14 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) marshalOItem2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐItem(ctx context.Context, sel ast.SelectionSet, v *model.Item) graphql.Marshaler {
+func (ec *executionContext) marshalOItem2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐItem(ctx context.Context, sel ast.SelectionSet, v *model.Item) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Item(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOItemInput2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐItemInput(ctx context.Context, v interface{}) (*model.ItemInput, error) {
+func (ec *executionContext) unmarshalOItemInput2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐItemInput(ctx context.Context, v interface{}) (*model.ItemInput, error) {
 	if v == nil {
 		return nil, nil
 	}

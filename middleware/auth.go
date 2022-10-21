@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Farishadibrata/golang-rfq/service"
+	"github.com/devAlvinSyahbana/golang-rfq/service"
 )
 
 type authString string

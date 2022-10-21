@@ -7,9 +7,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/Farishadibrata/golang-rfq/graph/generated"
-	"github.com/Farishadibrata/golang-rfq/graph/model"
-	"github.com/Farishadibrata/golang-rfq/service"
+	"github.com/devAlvinSyahbana/golang-rfq/graph/generated"
+	"github.com/devAlvinSyahbana/golang-rfq/graph/model"
+	"github.com/devAlvinSyahbana/golang-rfq/service"
 	"github.com/lib/pq"
 )
 
