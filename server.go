@@ -7,14 +7,14 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/99designs/gqlgen/handler"
-	"github.com/devAlvinSyahbana/golang-rfq/graph"
-	"github.com/devAlvinSyahbana/golang-rfq/graph/generated"
-	middlewares "github.com/devAlvinSyahbana/golang-rfq/middleware"
+	"github.com/Farishadibrata/golang-rfq/graph"
+	"github.com/Farishadibrata/golang-rfq/graph/generated"
+	middlewares "github.com/Farishadibrata/golang-rfq/middleware"
+	"github.com/Farishadibrata/golang-rfq/service"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"github.com/rs/cors"
@@ -45,10 +45,9 @@ func main() {
 	}
 	router := mux.NewRouter()
 	router.Use(middlewares.AuthMiddleware)
-	// schema := generated.Config{Resolvers: &graph.Resolver{DB: db}}
+	router.HandleFunc("/download/{id}", service.GeneratePDFMux)
 	schema := generated.Config{Resolvers: &graph.Resolver{DB: db}}
 	schema.Directives.RequireLogin = func(ctx context.Context, obj interface{}, next graphql.Resolver, hastoken bool) (interface{}, error) {
-
 		if hastoken {
 			token := middlewares.CtxValue(ctx)
 			if token == nil {
@@ -58,25 +57,22 @@ func main() {
 		}
 		return next(ctx)
 	}
+
+	router.Use(cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://127.0.0.1:5173"},
+		AllowCredentials: true,
+		AllowedHeaders:   []string{"Authorization", "Content-Type"},
+		AllowedMethods:   []string{"POST", "GET", "OPTIONS"},
+		Debug:            true,
+		AllowOriginFunc:  func(origin string) bool { return true },
+	}).Handler)
+
 	gql := generated.NewExecutableSchema(schema)
 
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	router.Handle("/query", middlewares.AuthMiddleware(handler.GraphQL(gql)))
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	corsHandler := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:5173"},
-		AllowCredentials: true,
-		Debug:            true,
-		AllowOriginFunc:  func(origin string) bool { return true },
-	}).Handler(router)
 
-	srv := &http.Server{
-		Handler:      corsHandler,
-		Addr:         "127.0.0.1:4080",
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
-	}
-
-	log.Fatal(srv.ListenAndServe())
+	log.Fatal(http.ListenAndServe(":4080", router))
 }

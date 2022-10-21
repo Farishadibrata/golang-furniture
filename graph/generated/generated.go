@@ -59,11 +59,11 @@ type ComplexityRoot struct {
 	Mutation struct {
 		CreateRfq func(childComplexity int, input model.NewRfq) int
 		Login     func(childComplexity int, input model.Login) int
+		Rfq       func(childComplexity int, input model.RFQInput) int
 	}
 
 	Query struct {
 		RFQList func(childComplexity int) int
-		RFQs    func(childComplexity int) int
 	}
 
 	RFQ struct {
@@ -97,9 +97,9 @@ type ComplexityRoot struct {
 type MutationResolver interface {
 	CreateRfq(ctx context.Context, input model.NewRfq) (*model.Rfq, error)
 	Login(ctx context.Context, input model.Login) (*model.LoginResponse, error)
+	Rfq(ctx context.Context, input model.RFQInput) (*model.Rfq, error)
 }
 type QueryResolver interface {
-	RFQs(ctx context.Context) ([]*model.Rfq, error)
 	RFQList(ctx context.Context) ([]*model.RFQList, error)
 }
 
@@ -177,19 +177,24 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.Login(childComplexity, args["input"].(model.Login)), true
 
+	case "Mutation.RFQ":
+		if e.complexity.Mutation.Rfq == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_RFQ_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.Rfq(childComplexity, args["input"].(model.RFQInput)), true
+
 	case "Query.RFQList":
 		if e.complexity.Query.RFQList == nil {
 			break
 		}
 
 		return e.complexity.Query.RFQList(childComplexity), true
-
-	case "Query.RFQs":
-		if e.complexity.Query.RFQs == nil {
-			break
-		}
-
-		return e.complexity.Query.RFQs(childComplexity), true
 
 	case "RFQ.CompanyAddress":
 		if e.complexity.RFQ.CompanyAddress == nil {
@@ -349,6 +354,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputItemInput,
 		ec.unmarshalInputLogin,
 		ec.unmarshalInputNewRFQ,
+		ec.unmarshalInputRFQInput,
 	)
 	first := true
 
@@ -453,7 +459,6 @@ input ItemInput {
   Qty: Int!
 }
 
-
 input NewRFQ {
   CompanyName: String!
   CompanyAddress: String!
@@ -481,14 +486,17 @@ input Login {
 type LoginResponse {
   token: String!
 }
+input RFQInput {
+  id: String!
+}
 type Mutation {
   createRFQ(input: NewRFQ!): RFQ!
-  login(input: Login!) : LoginResponse!
+  login(input: Login!): LoginResponse!
+  RFQ(input: RFQInput!): RFQ! @requireLogin(hasToken: true)
 }
 
 type Query {
-  RFQs: [RFQ!]! @requireLogin(hasToken : true)
-  RFQList: [RFQList!]! @requireLogin(hasToken : true)
+  RFQList: [RFQList!]! @requireLogin(hasToken: true)
 }
 `, BuiltIn: false},
 }
@@ -510,6 +518,21 @@ func (ec *executionContext) dir_requireLogin_args(ctx context.Context, rawArgs m
 		}
 	}
 	args["hasToken"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_RFQ_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.RFQInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNRFQInput2githubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -968,8 +991,8 @@ func (ec *executionContext) fieldContext_Mutation_login(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_RFQs(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_RFQs(ctx, field)
+func (ec *executionContext) _Mutation_RFQ(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_RFQ(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -983,7 +1006,7 @@ func (ec *executionContext) _Query_RFQs(ctx context.Context, field graphql.Colle
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Query().RFQs(rctx)
+			return ec.resolvers.Mutation().Rfq(rctx, fc.Args["input"].(model.RFQInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			hasToken, err := ec.unmarshalNBoolean2bool(ctx, true)
@@ -1003,10 +1026,10 @@ func (ec *executionContext) _Query_RFQs(ctx context.Context, field graphql.Colle
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.([]*model.Rfq); ok {
+		if data, ok := tmp.(*model.Rfq); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/devAlvinSyahbana/golang-rfq/graph/model.Rfq`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/Farishadibrata/golang-rfq/graph/model.Rfq`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1018,14 +1041,14 @@ func (ec *executionContext) _Query_RFQs(ctx context.Context, field graphql.Colle
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*model.Rfq)
+	res := resTmp.(*model.Rfq)
 	fc.Result = res
-	return ec.marshalNRFQ2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRfqᚄ(ctx, field.Selections, res)
+	return ec.marshalNRFQ2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_RFQs(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_RFQ(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "Query",
+		Object:     "Mutation",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
@@ -1070,6 +1093,17 @@ func (ec *executionContext) fieldContext_Query_RFQs(ctx context.Context, field g
 			}
 			return nil, fmt.Errorf("no field named %q was found under type RFQ", field.Name)
 		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_RFQ_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
 	}
 	return fc, nil
 }
@@ -4222,6 +4256,34 @@ func (ec *executionContext) unmarshalInputNewRFQ(ctx context.Context, obj interf
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputRFQInput(ctx context.Context, obj interface{}) (model.RFQInput, error) {
+	var it model.RFQInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"id"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "id":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+			it.ID, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -4344,6 +4406,15 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "RFQ":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_RFQ(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -4374,29 +4445,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
-		case "RFQs":
-			field := field
-
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_RFQs(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return rrm(innerCtx)
-			})
 		case "RFQList":
 			field := field
 
@@ -5078,51 +5126,7 @@ func (ec *executionContext) marshalNRFQ2githubᚗcomᚋdevAlvinSyahbanaᚋgolang
 	return ec._RFQ(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNRFQ2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRfqᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Rfq) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNRFQ2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNRFQ2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx context.Context, sel ast.SelectionSet, v *model.Rfq) graphql.Marshaler {
+func (ec *executionContext) marshalNRFQ2ᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRfq(ctx context.Context, sel ast.SelectionSet, v *model.Rfq) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -5132,7 +5136,12 @@ func (ec *executionContext) marshalNRFQ2ᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgol
 	return ec._RFQ(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNRFQList2ᚕᚖgithubᚗcomᚋdevAlvinSyahbanaᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQListᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.RFQList) graphql.Marshaler {
+func (ec *executionContext) unmarshalNRFQInput2githubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQInput(ctx context.Context, v interface{}) (model.RFQInput, error) {
+	res, err := ec.unmarshalInputRFQInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNRFQList2ᚕᚖgithubᚗcomᚋFarishadibrataᚋgolangᚑrfqᚋgraphᚋmodelᚐRFQListᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.RFQList) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1

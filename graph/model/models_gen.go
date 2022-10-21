@@ -65,6 +65,10 @@ type Rfq struct {
 	Interest         int      `json:"Interest"`
 }
 
+type RFQInput struct {
+	ID string `json:"id"`
+}
+
 type RFQList struct {
 	ID          string `json:"id"`
 	CompanyName string `json:"CompanyName"`

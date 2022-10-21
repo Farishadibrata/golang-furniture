@@ -31,7 +31,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 
 		ctx := context.WithValue(r.Context(), authString("auth"), validate.Claims)
 		// w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4080")
+		w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
 		r = r.WithContext(ctx)
 		next.ServeHTTP(w, r)
 	})
