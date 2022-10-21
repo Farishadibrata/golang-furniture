@@ -72,35 +72,33 @@ func (r *mutationResolver) Login(ctx context.Context, input model.Login) (*model
 	return &response, nil
 }
 
-// RFQs is the resolver for the RFQs field.
-func (r *queryResolver) RFQs(ctx context.Context) ([]*model.Rfq, error) {
-	rows, err := r.DB.Query("SELECT * FROM rfq.header")
+// Rfq is the resolver for the RFQ field.
+func (r *mutationResolver) Rfq(ctx context.Context, input model.RFQInput) (*model.Rfq, error) {
+	response := &model.Rfq{}
+
+	err := r.DB.QueryRow(`SELECT * FROM rfq.header WHERE "ID" = ($1)`, input.ID).Scan(
+		&response.CompanyName,
+		&response.CompanyAddress,
+		&response.CompanyWebsite,
+		&response.QuotationDate,
+		&response.QuotationNo,
+		&response.QuotationExpires,
+		&response.MadeForName,
+		&response.MadeForAddress,
+		&response.MadeForPhone,
+		&response.SentToName,
+		&response.SentToAddress,
+		&response.SentToPhone,
+		&response.Disc,
+		&response.Tax,
+		&response.Interest,
+		pq.Array(&response.Snk),
+		&response.ID,
+	)
 	if err != nil {
 		panic(err)
 	}
-	responseArray := []*model.Rfq{}
-	for rows.Next() {
-		response := &model.Rfq{}
-		rows.Scan(&response.CompanyName,
-			&response.CompanyAddress,
-			&response.CompanyWebsite,
-			&response.QuotationDate,
-			&response.QuotationNo,
-			&response.QuotationExpires,
-			&response.MadeForName,
-			&response.MadeForAddress,
-			&response.MadeForPhone,
-			&response.SentToName,
-			&response.SentToAddress,
-			&response.SentToPhone,
-			&response.Disc,
-			&response.Tax,
-			&response.Interest,
-			pq.Array(&response.Snk),
-			&response.ID)
-		responseArray = append(responseArray, response)
-	}
-	return responseArray, nil
+	return response, nil
 }
 
 // RFQList is the resolver for the RFQList field.

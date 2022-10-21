@@ -42,7 +42,6 @@ input ItemInput {
   Qty: Int!
 }
 
-
 input NewRFQ {
   CompanyName: String!
   CompanyAddress: String!
@@ -70,12 +69,15 @@ input Login {
 type LoginResponse {
   token: String!
 }
+input RFQInput {
+  id: String!
+}
 type Mutation {
   createRFQ(input: NewRFQ!): RFQ!
-  login(input: Login!) : LoginResponse!
+  login(input: Login!): LoginResponse!
+  RFQ(input: RFQInput!): RFQ! @requireLogin(hasToken: true)
 }
 
 type Query {
-  RFQs: [RFQ!]! @requireLogin(hasToken : true)
-  RFQList: [RFQList!]! @requireLogin(hasToken : true)
+  RFQList: [RFQList!]! @requireLogin(hasToken: true)
 }

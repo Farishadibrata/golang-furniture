@@ -14,6 +14,7 @@ import (
 	"github.com/Farishadibrata/golang-rfq/graph"
 	"github.com/Farishadibrata/golang-rfq/graph/generated"
 	middlewares "github.com/Farishadibrata/golang-rfq/middleware"
+	"github.com/Farishadibrata/golang-rfq/service"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"github.com/rs/cors"
@@ -44,7 +45,7 @@ func main() {
 	}
 	router := mux.NewRouter()
 	router.Use(middlewares.AuthMiddleware)
-
+	router.HandleFunc("/download/{id}", service.GeneratePDFMux)
 	schema := generated.Config{Resolvers: &graph.Resolver{DB: db}}
 	schema.Directives.RequireLogin = func(ctx context.Context, obj interface{}, next graphql.Resolver, hastoken bool) (interface{}, error) {
 		if hastoken {
