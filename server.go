@@ -27,9 +27,9 @@ type authString string
 const (
 	host     = "localhost"
 	portDB   = "5432"
-	user     = "postgres123"
-	password = "postgres123"
-	dbname   = "postgres"
+	user     = "postgres"
+	password = "@231020"
+	dbname   = "dms_rfq"
 )
 
 func main() {

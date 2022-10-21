@@ -1,4 +1,4 @@
-module github.com/Farishadibrata/golang-rfq
+module github.com/devAlvinSyahbana/golang-rfq
 
 go 1.18
 
