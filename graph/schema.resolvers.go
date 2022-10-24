@@ -103,7 +103,7 @@ func (r *mutationResolver) Rfq(ctx context.Context, input model.RFQInput) (*mode
 
 // RFQList is the resolver for the RFQList field.
 func (r *queryResolver) RFQList(ctx context.Context) ([]*model.RFQList, error) {
-	rows, err := r.DB.Query(`SELECT "ID", "CompanyName","QuotationNo" FROM rfq.header`)
+	rows, err := r.DB.Query(`SELECT "ID", "CompanyName","QuotationNo" FROM rfq.header ORDER BY "CreatedAt" DESC`)
 	if err != nil {
 		panic(err)
 	}
