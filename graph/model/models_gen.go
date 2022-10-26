@@ -3,10 +3,17 @@
 package model
 
 type Item struct {
-	HeaderID string `json:"HeaderID"`
-	Nama     string `json:"Nama"`
-	Harga    int    `json:"Harga"`
-	Qty      int    `json:"Qty"`
+	HeaderID  string `json:"HeaderID"`
+	Nama      string `json:"Nama"`
+	Harga     int    `json:"Harga"`
+	Qty       int    `json:"Qty"`
+	CreatedAt *string `json:"CreatedAt"`
+	CreatedBy *string `json:"CreatedBy"`
+	UpdatedAt *string `json:"UpdatedAt"`
+	UpdatedBy *string `json:"UpdatedBy"`
+	DeletedAt *string `json:"DeletedAt"`
+	DeletedBy *string `json:"DeletedBy"`
+	IsDeleted int    `json:"IsDeleted"`
 }
 
 type ItemInput struct {
@@ -42,6 +49,7 @@ type NewRfq struct {
 	Disc             int          `json:"Disc"`
 	Tax              int          `json:"Tax"`
 	Interest         int          `json:"Interest"`
+	Status           int          `json:"Status"`
 }
 
 type Rfq struct {
@@ -63,6 +71,14 @@ type Rfq struct {
 	Disc             int      `json:"Disc"`
 	Tax              int      `json:"Tax"`
 	Interest         int      `json:"Interest"`
+	CreatedAt        *string   `json:"CreatedAt"`
+	CreatedBy        *string   `json:"CreatedBy"`
+	UpdatedAt        *string   `json:"UpdatedAt"`
+	UpdatedBy        *string   `json:"UpdatedBy"`
+	Status           int      `json:"Status"`
+	DeletedAt        *string   `json:"DeletedAt"`
+	DeletedBy        *string   `json:"DeletedBy"`
+	IsDeleted        int      `json:"IsDeleted"`
 }
 
 type RFQInput struct {
