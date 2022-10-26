@@ -22,6 +22,14 @@ type RFQ {
   Disc: Int!
   Tax: Int!
   Interest: Int!
+  CreatedAt: String!
+  CreatedBy: String!
+  UpdatedAt: String!
+  UpdatedBy: String!
+  Status: Int!
+  DeletedAt: String!
+  DeletedBy: String!
+  IsDeleted: Int!
 }
 
 type Item {
@@ -29,6 +37,13 @@ type Item {
   Nama: String!
   Harga: Int!
   Qty: Int!
+  CreatedAt: String!
+  CreatedBy: String!
+  UpdatedAt: String!
+  UpdatedBy: String!
+  DeletedAt: String!
+  DeletedBy: String!
+  IsDeleted: Int!
 }
 
 type RFQList {
@@ -60,6 +75,7 @@ input NewRFQ {
   Disc: Int!
   Tax: Int!
   Interest: Int!
+  Status: Int!
 }
 
 input Login {
